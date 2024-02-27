@@ -1,7 +1,6 @@
+import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-const Greetings = (props) => <div>Hey you! {props.firstName} {props.lastName}!</div>;
-const GreetingsPro = ({ firstName, lastName }) => <div>Hey you! {firstName} {lastName}!</div>;
 
 function App() {
   return (
@@ -9,7 +8,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Edit <code>src/App.tsx</code> and save to reload.
         </p>
         <a
           className="App-link"
@@ -20,10 +19,6 @@ function App() {
           Learn React
         </a>
       </header>
-      <main>
-        <Greetings firstName="Stas" lastName="Oskol" />
-        <GreetingsPro firstName="Stas" lastName="Oskol" />
-      </main>
     </div>
   );
 }
