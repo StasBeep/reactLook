@@ -6,6 +6,10 @@ const MainPage = () => {
             <Link href="/arrayChild">
                 Array
             </Link>
+            /
+            <Link href="/apiContent">
+                Api
+            </Link>
         </Box>
     )
 }
