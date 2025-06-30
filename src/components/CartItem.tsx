@@ -1,8 +1,12 @@
+import { itemCartDto } from "../types/item-cart/itemCart.types";
+
 interface CartItemProps {
-    item: 
+    item: itemCartDto,
+    onUpdateQuantity: (value: number) => void,
+    onRemove: () => void
 }
 
-const CartItem = ({ item, onUpdateQuantity, onRemove }) => {
+const CartItem = ({ item, onUpdateQuantity, onRemove }: CartItemProps) => { //* Добавил пропс и callback-функции
     return (
         <div>
             <span>{item.name}</span>
