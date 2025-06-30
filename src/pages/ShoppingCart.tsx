@@ -1,11 +1,14 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 
-import CartItem from "../components/CartItem"
+import { itemCartDto } from "../types/item-cart/itemCart.types";
+import { userDto } from "../types/user/user.types";
+
+import CartItem from "../components/CartItem";
 
 const ShoppingCart = () => {
-    const [items, setItems] = useState([])
-    const [user, setUser] = useState(null)
-    const [loading, setLoading] = useState(false)
+    const [items, setItems] = useState<itemCartDto[]>();
+    const [user, setUser] = useState<userDto>();
+    const [loading, setLoading] = useState(false);
 
     // Загружаем корзину при маунте
     useEffect(() => {
@@ -20,18 +23,18 @@ const ShoppingCart = () => {
     }, []); //* Исправил, не хватало []
 
     // Считаем общую сумму
-    const total = items.reduce((sum, item) => {
+    const total = items?.reduce((sum, item) => {
         return sum + (item.price * item.quantity)
     }, 0)
 
     // Обновляем количество товара
     const updateQuantity = (itemId: number, newQuantity: number) => { //* Обновил типы входных параметров
-        setItems(items.map(item => item.id === itemId ? { ...item, quantity: newQuantity } : item));
+        setItems(items?.map(item => item.id === itemId ? { ...item, quantity: newQuantity } : item));
     }
 
     // Удаляем товар
     const removeItem = (itemId: number) => { //* Добавил тип входного значения
-        setItems(items.filter(item => item.id !== itemId))
+        setItems(items?.filter(item => item.id !== itemId))
     }
 
     if (loading) return <div>Загрузка...</div>
@@ -39,9 +42,9 @@ const ShoppingCart = () => {
     return (
         <div>
             <h2>Корзина пользователя {user?.name}</h2>
-            <div>Товаров: {items.length}</div>
+            <div>Товаров: {items?.length}</div>
 
-            {items.map(item => (
+            {items?.map(item => (
                 <CartItem
                     key={item.id}
                     item={item}
@@ -50,7 +53,7 @@ const ShoppingCart = () => {
                 />
             ))}
 
-            <div>Итого: {total.toFixed(2)} ₽</div>
+            <div>Итого: {total ? total.toFixed(2) : 0} ₽</div>
             <button onClick={() => console.log('Оформить заказ')}>
                 Оформить заказ
             </button>
