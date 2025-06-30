@@ -13,7 +13,7 @@ const ShoppingCart = () => {
     // Загружаем корзину при маунте
     useEffect(() => {
         setLoading(true);
-        fetch('/api/cart')
+        fetch('http://localhost:3001/api/cart')
             .then(res => res.json())
             .then(data => {
                 setItems(data.items)
