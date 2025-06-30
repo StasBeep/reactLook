@@ -1,4 +1,6 @@
-
+interface CartItemProps {
+    item: 
+}
 
 const CartItem = ({ item, onUpdateQuantity, onRemove }) => {
     return (

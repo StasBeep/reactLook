@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 
+import CartItem from "../components/CartItem"
+
 const ShoppingCart = () => {
     const [items, setItems] = useState([])
     const [user, setUser] = useState(null)
@@ -7,7 +9,7 @@ const ShoppingCart = () => {
 
     // Загружаем корзину при маунте
     useEffect(() => {
-        setLoading(true)
+        setLoading(true);
         fetch('/api/cart')
             .then(res => res.json())
             .then(data => {
@@ -15,7 +17,7 @@ const ShoppingCart = () => {
                 setUser(data.user)
                 setLoading(false)
             })
-    })
+    }, []); //* Исправил, не хватало []
 
     // Считаем общую сумму
     const total = items.reduce((sum, item) => {
@@ -23,16 +25,12 @@ const ShoppingCart = () => {
     }, 0)
 
     // Обновляем количество товара
-    const updateQuantity = (itemId, newQuantity) => {
-        setItems(items.map(item =>
-            item.id === itemId
-                ? { ...item, quantity: newQuantity }
-                : item
-        ))
+    const updateQuantity = (itemId: number, newQuantity: number) => { //* Обновил типы входных параметров
+        setItems(items.map(item => item.id === itemId ? { ...item, quantity: newQuantity } : item));
     }
 
     // Удаляем товар
-    const removeItem = (itemId) => {
+    const removeItem = (itemId: number) => { //* Добавил тип входного значения
         setItems(items.filter(item => item.id !== itemId))
     }
 
@@ -40,7 +38,7 @@ const ShoppingCart = () => {
 
     return (
         <div>
-            <h2>Корзина пользователя {user.name}</h2>
+            <h2>Корзина пользователя {user?.name}</h2>
             <div>Товаров: {items.length}</div>
 
             {items.map(item => (
