@@ -37,9 +37,9 @@ const ShoppingCart = () => {
         setItems(items?.filter(item => item.id !== itemId))
     }
 
-    if (loading) return <div>Загрузка...</div>
-
-    return (
+    return loading ?
+        <div>Загрузка...</div>
+        :
         <div>
             <h2>Корзина пользователя {user?.name}</h2>
             <div>Товаров: {items?.length}</div>
@@ -54,11 +54,15 @@ const ShoppingCart = () => {
             ))}
 
             <div>Итого: {total ? total.toFixed(2) : 0} ₽</div>
-            <button onClick={() => console.log('Оформить заказ')}>
+            <button
+                onClick={() => {
+                    console.log('Оформить заказ'); //! Интересная ситуация, в консоль ничего не выводится, а alert сработал!
+                    alert('Оформить заказ');
+                }}
+            >
                 Оформить заказ
             </button>
         </div>
-    )
 }
 
 export default ShoppingCart;
