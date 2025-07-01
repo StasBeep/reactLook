@@ -1,26 +1,25 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { observer } from "mobx-react";
+
+import { StoreCart } from "../store/store";
 
 import { itemCartDto } from "../types/item-cart/itemCart.types";
 import { userDto } from "../types/user/user.types";
 
 import CartItem from "../components/CartItem";
 
-const ShoppingCart = () => {
+
+const ShoppingCart = observer(() => {
+    const store = useContext(StoreCart)
+
     const [items, setItems] = useState<itemCartDto[]>();
     const [user, setUser] = useState<userDto>();
     const [loading, setLoading] = useState(false);
 
     // Загружаем корзину при маунте
     useEffect(() => {
-        setLoading(true);
-        fetch('http://localhost:3001/api/cart')
-            .then(res => res.json())
-            .then(data => {
-                setItems(data.items)
-                setUser(data.user)
-                setLoading(false)
-            })
-    }, []); //* Исправил, не хватало []
+        store.fetchCart()
+    }, []); //! ругается на пустые [], @ts-ignore, но мне кажется не стоит так
 
     // Считаем общую сумму
     const total = items?.reduce((sum, item) => {
@@ -44,7 +43,7 @@ const ShoppingCart = () => {
             <h2>Корзина пользователя {user?.name}</h2>
             <div>Товаров: {items?.length}</div>
 
-            {items?.map(item => (
+            {store.cartItems?.map(item => (
                 <CartItem
                     key={item.id}
                     item={item}
@@ -63,6 +62,6 @@ const ShoppingCart = () => {
                 Оформить заказ
             </button>
         </div>
-}
+})
 
 export default ShoppingCart;

@@ -3,6 +3,7 @@ import { createContext } from "react";
 
 import { getCart } from '../api/controllers/cart-controller';
 import { userDto } from '../types/user/user.types';
+import { itemCartDto } from '../types/item-cart/itemCart.types';
 
 class CartItem {
     name: string;
@@ -19,7 +20,7 @@ class CartItem {
 
 class Cart {
     user: userDto | null = null;
-    cartItems = [];
+    cartItems: itemCartDto[] = [];
     loading = true;
 
     constructor() {
