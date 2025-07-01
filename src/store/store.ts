@@ -1,6 +1,9 @@
 import { makeAutoObservable } from 'mobx';
 import { createContext } from "react";
 
+import { getCart } from '../api/controllers/cart-controller';
+import { userDto } from '../types/user/user.types';
+
 class CartItem {
     name: string;
     price: number;
@@ -15,6 +18,7 @@ class CartItem {
 }
 
 class Cart {
+    user: userDto | null = null;
     cartItems = [];
     loading = true;
 
@@ -26,7 +30,8 @@ class Cart {
         await getCart()
             .then((response) => {
                 this.loading = false;
-                this.todos = response.data;
+                this.user = response.data.user;
+                this.cartItems = response.data.items;
             })
             .catch((e) => {
                 console.log(e);
@@ -34,3 +39,6 @@ class Cart {
             })
     }
 }
+
+export const store = new Cart();
+export const StoreCart = createContext(store);
