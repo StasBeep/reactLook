@@ -1,14 +1,11 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-
 import {
   Box,
-  Button,
+  Button
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const MainPage = () => {
-  const navigate = useNavigate();
-  const [data, setData] = React.useState(0);
+  const navigate = useNavigate()
 
   return <Box
     sx={{
@@ -16,6 +13,11 @@ const MainPage = () => {
       m: '0 auto'
     }}
   >
+    <Button
+      onClick={() => navigate('/shopping-cart')}
+    >
+      ShoppingCart
+    </Button>
   </Box>
 };
 
